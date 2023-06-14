@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb-container
+    image: mariadb
+    build: ./requirements/mariadb
+    networks: 
+      - project
+    env_file: .env
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  wordpress:
+    name: wordpress-volume
+    driver_opts:
+      type: volume
+      device: '/Users/anaszanane/data/wordpress'
+      o: bind
+  mariadb:
+    name: mariadb-volume
+    driver_opts:
+      type: volume
+      o: bind
+      device: '/Users/anaszanane/data/mariadb'
+  
+networks:
+  project:
+    name: inception-network
